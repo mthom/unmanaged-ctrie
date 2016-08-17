@@ -1013,15 +1013,13 @@ namespace kl_ctrie
 	    class Hash,
 	    template <class> class Alloc,
 	    template <class> class Barrier>
-  class rdcss_descriptor : public inode_or_rdcss<K, V, Hash, Alloc, Barrier>
+  struct rdcss_descriptor : public inode_or_rdcss<K, V, Hash, Alloc, Barrier>
   {
-  private:
     Barrier<inode<K, V, Hash, Alloc, Barrier>*> ov;
     Barrier<main_node<K, V, Hash, Alloc, Barrier>*> expected_main;
     Barrier<inode<K, V, Hash, Alloc, Barrier>*> nv;
     bool committed;
 
-  public:
     inode<K, V, Hash, Alloc, Barrier>* rdcss_commit(Barrier<std::atomic<inode_or_rdcss<K, V, Hash, Alloc, Barrier>*>>& root,
 						    ctrie<K, V, Hash, Alloc, Barrier>& ct,
 						    bool abort)

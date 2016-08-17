@@ -1,0 +1,12 @@
+#+TITLE:         Unmanaged Concurrent Hash Tries
+#+AUTHOR:        Mark Thom
+#+EMAIL:         markjordanthom@gmail.com
+
+Concurrent hash tries are efficient, lock free, wait free, thread safe
+data structures with efficient snapshots. The C++ implementation
+contained here is translated from Aleksandar Prokopec's Scala
+implementation at https://github.com/axel22/Ctries.
+
+The translated code makes no attempt to destroy defunct objects. This
+is to say that the example code contained in test-ctrie.cpp leaks
+memory.

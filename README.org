@@ -2,8 +2,8 @@
 #+AUTHOR:        Mark Thom
 #+EMAIL:         markjordanthom@gmail.com
 
-Concurrent hash tries are efficient, lock free, wait free, thread safe
-data structures with efficient snapshots. The C++ implementation
+Concurrent hash tries are fast, lock free, wait free, thread safe
+data structures with constant time snapshots. The C++ implementation
 contained here is translated from Aleksandar Prokopec's Scala
 implementation at https://github.com/axel22/Ctries.
 

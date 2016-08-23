@@ -2,7 +2,7 @@
 #define IDENTITY_HPP_INCLUDED
 
 namespace kl_ctrie
-{
+{  
   template <class T>
   class identity {
     T data;

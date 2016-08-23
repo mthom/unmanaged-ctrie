@@ -12,7 +12,7 @@
 #include "plist.hpp"
 
 namespace kl_ctrie
-{
+{  
   template <template <class> class Alloc, class T, class... Ts>
   inline T* cons(Ts&&... args)
   {
@@ -124,6 +124,15 @@ namespace kl_ctrie
   template <typename, typename, class, template <class> class, template <class> class>
   struct branch;
 
+    // change to use custom vector types.
+  template <typename K,
+	    typename V,
+	    class Hash,
+	    template <class> class Alloc,
+	    template <class> class Barrier = identity>
+  using branch_vector = std::vector<Barrier<branch<K, V, Hash, Alloc, Barrier>*>,
+				    Alloc<Barrier<branch<K, V, Hash, Alloc, Barrier>*>>>;
+  
   template <typename K,
 	    typename V,
 	    class Hash,
@@ -207,14 +216,6 @@ namespace kl_ctrie
 			    cnode<K, V, Hash, Alloc, Barrier>* cn) = 0;
     virtual void* derived_ptr() = 0;
   };
-
-  template <typename K,
-	    typename V,
-	    class Hash,
-	    template <class> class Alloc,
-	    template <class> class Barrier = identity>
-  using branch_vector = std::vector<Barrier<branch<K, V, Hash, Alloc, Barrier>*>,
-				    branch_vector_allocator<Barrier<branch<K, V, Hash, Alloc, Barrier>*>>>;
 
   template <typename K,
 	    typename V,

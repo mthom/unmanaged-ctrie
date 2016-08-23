@@ -125,14 +125,13 @@ namespace kl_ctrie
   template <typename, typename, class, template <class> class, template <class> class>
   struct branch;
 
-    // change to use custom vector types.
+  // change to use custom vector types.
   template <typename K,
 	    typename V,
 	    class Hash,
 	    template <class> class Alloc,
 	    template <class> class Barrier = identity>
-  using branch_vector = simple_vector<Barrier<branch<K, V, Hash, Alloc, Barrier>*>,
-				      Alloc<Barrier<branch<K, V, Hash, Alloc, Barrier>*>>>;
+  using branch_vector = branch_vector_t<Barrier<branch<K, V, Hash, Alloc, Barrier>*>>;				      
   
   template <typename K,
 	    typename V,

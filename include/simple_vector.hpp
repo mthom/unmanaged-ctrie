@@ -77,13 +77,13 @@ public:
   simple_vector(const size_t n)
     : sz(n)
     , cap(2 * n)
-    , data_(Alloc().allocate(cap * sizeof(T)))
+    , data_(Alloc().allocate(cap))
   {}
   
   simple_vector(size_t n, const T& init)
     : sz(n)
     , cap(2 * n)
-    , data_(Alloc().allocate(cap * sizeof(T)))
+    , data_(Alloc().allocate(cap))
   {
     for(size_t i = 0; i < n; ++i)
       new(data_[i]) T(init);
@@ -101,7 +101,7 @@ public:
   simple_vector(std::initializer_list<T> lst)
     : sz(0)
     , cap(2 * lst.size())
-    , data_(Alloc().allocate(cap * sizeof(T)))
+    , data_(Alloc().allocate(cap))
   {        
     for(auto& t : lst)
       push_back(t);
@@ -110,7 +110,7 @@ public:
   simple_vector(const simple_vector& v)
     : sz(v.sz)
     , cap(v.cap)
-    , data_(Alloc().allocate(cap * sizeof(T)))
+    , data_(Alloc().allocate(cap))
   {
     std::memcpy(reinterpret_cast<void*>(data_),
 		reinterpret_cast<const void*>(v.data_),
@@ -168,7 +168,7 @@ public:
     assert(new_cap >= sz);
 
     cap = new_cap;
-    T* new_data_ = Alloc().allocate(new_cap * sizeof(T));
+    T* new_data_ = Alloc().allocate(new_cap);
 
     std::memcpy(reinterpret_cast<void*>(new_data_),
 		reinterpret_cast<const void*>(data_),

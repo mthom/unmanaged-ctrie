@@ -2,7 +2,10 @@
 #define IDENTITY_HPP_INCLUDED
 
 namespace kl_ctrie
-{  
+{
+  template <typename T>
+  using branch_vector_t = std::vector<T>;
+  
   template <class T>
   class identity {
     T data;

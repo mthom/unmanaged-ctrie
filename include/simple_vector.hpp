@@ -9,7 +9,7 @@ class simple_vector
 {  
 private:
   size_t sz, cap;
-  T* data;
+  T* data_;
 
   class iterator {
   private:
@@ -72,36 +72,36 @@ private:
 public:
   using value_type = T;
 
-  simple_vector() : sz(0), cap(0), data(nullptr) {}
+  simple_vector() : sz(0), cap(0), data_(nullptr) {}
   
   simple_vector(const size_t n)
     : sz(n)
     , cap(2 * n)
-    , data(Alloc().allocate(cap * sizeof(T)))
+    , data_(Alloc().allocate(cap * sizeof(T)))
   {}
   
   simple_vector(size_t n, const T& init)
     : sz(n)
     , cap(2 * n)
-    , data(Alloc().allocate(cap * sizeof(T)))
+    , data_(Alloc().allocate(cap * sizeof(T)))
   {
     for(size_t i = 0; i < n; ++i)
-      new(data[i]) T(init);
+      new(data_[i]) T(init);
   }
   
   simple_vector(simple_vector&& v)
     : sz(v.sz)
     , cap(v.cap)
-    , data(v.data)
+    , data_(v.data_)
   {
     v.sz = v.cap = 0;
-    v.data = nullptr;
+    v.data_ = nullptr;
   }
 
   simple_vector(std::initializer_list<T> lst)
     : sz(0)
     , cap(2 * lst.size())
-    , data(Alloc().allocate(cap * sizeof(T)))
+    , data_(Alloc().allocate(cap * sizeof(T)))
   {        
     for(auto& t : lst)
       push_back(t);
@@ -110,10 +110,10 @@ public:
   simple_vector(const simple_vector& v)
     : sz(v.sz)
     , cap(v.cap)
-    , data(Alloc().allocate(cap * sizeof(T)))
+    , data_(Alloc().allocate(cap * sizeof(T)))
   {
-    std::memcpy(reinterpret_cast<void*>(data),
-		reinterpret_cast<const void*>(v.data),
+    std::memcpy(reinterpret_cast<void*>(data_),
+		reinterpret_cast<const void*>(v.data_),
 		sz * sizeof(T));
   }
 
@@ -121,10 +121,10 @@ public:
   {
     sz = v.sz;
     cap = v.cap;
-    data = v.data;
+    data_ = v.data_;
 
     v.sz = v.cap = 0;
-    v.data = nullptr;
+    v.data_ = nullptr;
 
     return *this;
   }
@@ -133,7 +133,7 @@ public:
   {
     sz = v.sz;
     cap = v.cap;
-    data = v.data;
+    data_ = v.data_;
 
     return *this;
   }
@@ -144,7 +144,7 @@ public:
       return false;
 
     for(size_t i = 0; i < sz; ++i)
-      if(data[i] != v[i])
+      if(data_[i] != v[i])
 	return false;
 
     return true;
@@ -156,11 +156,11 @@ public:
   }
   
   inline iterator begin() {
-    return iterator { data };
+    return iterator { data_ };
   }
 
   inline iterator end() {
-    return iterator { &data[sz] };
+    return iterator { &data_[sz] };
   }
   
   void reserve(size_t new_cap)
@@ -168,13 +168,13 @@ public:
     assert(new_cap >= sz);
 
     cap = new_cap;
-    T* new_data = Alloc().allocate(new_cap * sizeof(T));
+    T* new_data_ = Alloc().allocate(new_cap * sizeof(T));
 
-    std::memcpy(reinterpret_cast<void*>(new_data),
-		reinterpret_cast<const void*>(data),
+    std::memcpy(reinterpret_cast<void*>(new_data_),
+		reinterpret_cast<const void*>(data_),
 		sz * sizeof(T));
 
-    data = new_data;
+    data_ = new_data_;
   }
 
   inline size_t size() const {
@@ -188,36 +188,41 @@ public:
   inline bool empty() const {
     return sz == 0;
   }
+
+  inline T* data()
+  {
+    return data_;
+  }
   
   inline T pop_back()
   {
-    T result(data[sz-1]);
+    T result(data_[sz-1]);
     --sz;
     return result;
-  }
+  }  
   
   void push_back(const T& t)
   {
     if(sz == cap)
       reserve(2 * cap);
 
-    data[sz++] = t;
+    data_[sz++] = t;
   }
 
   inline T& back() {
-    return data[sz-1];
+    return data_[sz-1];
   }
 
   inline T& front() {
-    return data[0];
+    return data_[0];
   }
 
   inline T& operator[](size_t i) {
-    return data[i];
+    return data_[i];
   }
 
   inline const T& operator[](size_t i) const {
-    return data[i];
+    return data_[i];
   }
 };
 

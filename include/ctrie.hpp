@@ -10,6 +10,7 @@
 
 #include "identity.hpp"
 #include "plist.hpp"
+#include "simple_vector.hpp"
 
 namespace kl_ctrie
 {  
@@ -130,8 +131,8 @@ namespace kl_ctrie
 	    class Hash,
 	    template <class> class Alloc,
 	    template <class> class Barrier = identity>
-  using branch_vector = std::vector<Barrier<branch<K, V, Hash, Alloc, Barrier>*>,
-				    Alloc<Barrier<branch<K, V, Hash, Alloc, Barrier>*>>>;
+  using branch_vector = simple_vector<Barrier<branch<K, V, Hash, Alloc, Barrier>*>,
+				      Alloc<Barrier<branch<K, V, Hash, Alloc, Barrier>*>>>;
   
   template <typename K,
 	    typename V,

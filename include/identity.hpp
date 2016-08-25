@@ -4,10 +4,7 @@
 #include "simple_vector.hpp"
 
 namespace kl_ctrie
-{  
-  template <typename T, class Alloc = std::allocator<T>>
-  using branch_vector_t = simple_vector<T, Alloc>;
-  
+{    
   template <class T>
   class identity {
     T data;

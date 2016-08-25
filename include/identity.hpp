@@ -1,10 +1,12 @@
 #ifndef IDENTITY_HPP_INCLUDED
 #define IDENTITY_HPP_INCLUDED
 
+#include "simple_vector.hpp"
+
 namespace kl_ctrie
-{
-  template <typename T>
-  using branch_vector_t = std::vector<T>;
+{  
+  template <typename T, class Alloc = std::allocator<T>>
+  using branch_vector_t = simple_vector<T, Alloc>;
   
   template <class T>
   class identity {

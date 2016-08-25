@@ -131,7 +131,8 @@ namespace kl_ctrie
 	    class Hash,
 	    template <class> class Alloc,
 	    template <class> class Barrier = identity>
-  using branch_vector = branch_vector_t<Barrier<branch<K, V, Hash, Alloc, Barrier>*>, Alloc<Barrier<branch<K, V, Hash, Alloc, Barrier>*>>>;				      
+  using branch_vector = simple_vector<Barrier<branch<K, V, Hash, Alloc, Barrier>*>,
+				      branch_vector_allocator<Barrier<branch<K, V, Hash, Alloc, Barrier>*>>>;
   
   template <typename K,
 	    typename V,

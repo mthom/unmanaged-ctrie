@@ -28,12 +28,12 @@ private:
     
     iterator& operator++(int) {
       auto result = iterator { it };
-      it = &it[1];
+      it = reinterpret_cast<T*>(reinterpret_cast<size_t>(it) + sizeof(T));
       return result;
     }
 
     iterator& operator++() {
-      it = &it[1];
+      it = reinterpret_cast<T*>(reinterpret_cast<size_t>(it) + sizeof(T));
       return *this;
     }
 
@@ -46,7 +46,7 @@ private:
     }
 
     inline iterator operator+(uint64_t i) const {
-      return iterator { &it[i] };
+      return iterator { reinterpret_cast<T*>(reinterpret_cast<size_t>(it) + i * sizeof(T)) };
     }
     
     inline iterator& operator=(iterator&& iter) {
@@ -160,7 +160,7 @@ public:
   }
 
   inline iterator end() {
-    return iterator { &data_[sz] };
+    return iterator { reinterpret_cast<T*>(reinterpret_cast<size_t>(data_) + sz * sizeof(T)) };
   }
   
   void reserve(size_t new_cap)

@@ -4,7 +4,7 @@
 #include "simple_vector.hpp"
 
 namespace kl_ctrie
-{    
+{  
   template <class T>
   class identity {
     T data;
